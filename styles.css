@@ -4,7 +4,6 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    height: 100vh;
     margin: 0;
     padding-top: 20px;
 }
@@ -33,9 +32,9 @@ p {
 
 canvas {
     image-rendering: pixelated;
-    background-color: #ffff;
-    width: 700px;
-    height: 456px;
+    background-color: #9badb7;
+    /* width: 700px;
+    height: 456px; */
     border: 2px solid black;
     font-smooth: never;
     -webkit-font-smoothing: none;

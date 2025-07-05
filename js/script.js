@@ -46,7 +46,7 @@ const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 let scalingFactor = 4;
 canvas.width =175 * scalingFactor;
-canvas.height = 100 * scalingFactor;
+canvas.height = 175 * scalingFactor;
 ctx.scale(scalingFactor, scalingFactor);
 
 let width = canvas.width / scalingFactor
@@ -56,18 +56,52 @@ const halfHeight = height / 2;
 
 ctx.imageSmoothingEnabled= false
 
-
-
 function vec2(x, y) {
     return {x: x, y: y};
 }
 
+let bgTileSet = loadImage("./assets/tile atlas.png")
+let bgTileSetCols = 8;
+let bgTileSetRows = 3;
+const tileSize = 8;
+
+const map = [
+    4,2,3,2,3,2,3,2,3,2,3,2,3,5,
+    6,0,0,0,0,0,0,0,0,0,0,0,0,7,
+    6,0,0,0,0,0,0,0,0,0,0,0,0,7,
+    6,0,0,0,0,0,0,0,0,0,0,0,0,7,
+    6,0,0,0,0,0,0,0,0,0,0,0,0,7,
+    6,0,0,0,0,0,0,0,0,0,0,0,0,7,
+    6,0,0,0,0,0,0,0,0,0,0,0,0,7,
+    6,0,0,0,0,0,0,0,0,0,0,0,0,7,
+    6,0,0,0,0,0,0,0,0,0,0,0,0,7,
+    6,0,0,0,0,0,0,0,0,0,0,0,0,7,
+    6,0,0,0,0,0,0,0,0,0,0,0,0,7,
+    6,0,0,0,0,0,0,0,0,0,0,0,0,7,
+    6,0,0,0,0,0,0,0,0,0,0,0,0,7,
+    6,0,0,0,0,0,0,0,0,0,0,0,0,7,
+    6,0,0,0,0,0,0,0,0,0,0,0,0,7,
+    12,14,15,15,15,15,15,15,15,15,15,15,16,13,
+]
+const gridRows = 15;
+const gridCols = 14;
 function gameUpdate() {
 
 }
 
 function gameDraw() {
-
+    // BG
+    //ctx.drawImage(bgTileSet, 0, 0, tileSize, tileSize, 0, 0, tileSize, tileSize)
+    //https://github.com/pothonprogramming/pothonprogramming.github.io/blob/master/content/rabbit-trap/03/game-03.js
+    for (let index = map.length - 1; index > -1; -- index) {
+        let value = map[index] - 1;
+        let source_x =           (value % bgTileSetCols) * tileSize;
+        let source_y = Math.floor(value / bgTileSetCols) * tileSize;
+        let destination_x =           (index % gridCols) * tileSize;
+        let destination_y = Math.floor(index / gridCols) * tileSize;
+  
+        ctx.drawImage(bgTileSet, source_x, source_y, tileSize, tileSize, destination_x, destination_y, tileSize, tileSize);
+    }
 }
 
 function gameLoop() {
