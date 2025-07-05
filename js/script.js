@@ -56,12 +56,11 @@ const halfHeight = height / 2;
 
 ctx.imageSmoothingEnabled= false
 
-let solvedCards = 0;
+
 
 function vec2(x, y) {
     return {x: x, y: y};
 }
-
 
 function gameUpdate() {
 

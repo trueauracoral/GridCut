@@ -28,3 +28,6 @@ Drew a significant amount of assets for the game
 Wrote up a pitch/game design document for this game and showed it to people. And decided on a fix for how you could just constantly cut from the bottom. SO the terrain will need to be randomly generated with a curve and a low point or something. made easy tileset for that. Programming that would be the hard part.
 ## 6/30/25
 Created a tileset that should supposedly work for the random terrain generation I thought of yesterday and created TODO list.
+## 7/2/25
+Made boiler plate code by deleting a bunch of stuff from the previous project (golf solitaire). Hopefuly I will use that boilerplate in the future. I also exported into an image file the main tiles i need to complete the first thing on my todo list which is the generatable width and height arena for the game. I have an idea of how to make code to read the tileset. Ideally name to index.
+I also setup github pages.
