@@ -1,11 +1,11 @@
 # GridCut: THE VIDEOGAME
 
 # TODO List
-- [ ] Draw BG.
+- [X] Draw BG.
 - [ ] Create a random line generator fpr terain
-    - [ ] Randomly generate line
+    - [X] Randomly generate line
         It is based on 4 intervals, just add and subtract from the line based on randomly generated numbers (1,2,3). It will be harder to program than just saying it.
-    - [ ] Draw it to screen.
+    - [X] Draw it to screen.
     - [ ] Figure out how to use tileset to work with the random line created
 - [ ] Make bamboo grow from the top parts of the line on grid
 - [ ] Detect when bamboo reaches the top.
@@ -41,3 +41,5 @@ https://github.com/pothonprogramming/pothonprogramming.github.io/blob/master/con
 
 It's not dynamic enough if I want to be able to change size. I guess that's not feasable at my skill level. I will just need to fiddle with it till I find a size that works well enough.
 The drawing of the dirt blocks will need to use some other technique.
+## 7/6/25 
+Figured out line generation and drew temporary boxes to the screen. Tommorow need to figure out automatic tiling. Not sure how to do that.

@@ -11,6 +11,10 @@ function createAudio(src) {
     audio.playbackRate = 4;
     return audio;
 }
+//https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript
+function generateRandomInteger(min, max) {
+    return Math.floor(min + Math.random()*(max - min + 1))
+}
 const loadFont = () => {
     const font = new FontFace('PixelFont', 'url(./font/3-by-5-pixel-font.ttf)');
     font.load().then((loadedFont) => {
@@ -66,41 +70,102 @@ let bgTileSetRows = 3;
 const tileSize = 8;
 
 const map = [
-    4,2,3,2,3,2,3,2,3,2,3,2,3,5,
-    6,0,0,0,0,0,0,0,0,0,0,0,0,7,
-    6,0,0,0,0,0,0,0,0,0,0,0,0,7,
-    6,0,0,0,0,0,0,0,0,0,0,0,0,7,
-    6,0,0,0,0,0,0,0,0,0,0,0,0,7,
-    6,0,0,0,0,0,0,0,0,0,0,0,0,7,
-    6,0,0,0,0,0,0,0,0,0,0,0,0,7,
-    6,0,0,0,0,0,0,0,0,0,0,0,0,7,
-    6,0,0,0,0,0,0,0,0,0,0,0,0,7,
-    6,0,0,0,0,0,0,0,0,0,0,0,0,7,
-    6,0,0,0,0,0,0,0,0,0,0,0,0,7,
-    6,0,0,0,0,0,0,0,0,0,0,0,0,7,
-    6,0,0,0,0,0,0,0,0,0,0,0,0,7,
-    6,0,0,0,0,0,0,0,0,0,0,0,0,7,
-    6,0,0,0,0,0,0,0,0,0,0,0,0,7,
-    12,14,15,15,15,15,15,15,15,15,15,15,16,13,
-]
-const gridRows = 15;
-const gridCols = 14;
+    [ 4, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 5 ],
+    [ 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7 ],
+    [ 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7 ],
+    [ 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7 ],
+    [ 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7 ],
+    [ 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7 ],
+    [ 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7 ],
+    [ 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7 ],
+    [ 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7 ],
+    [ 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7 ],
+    [ 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7 ],
+    [ 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7 ],
+    [ 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7 ],
+    [ 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7 ],
+    [ 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7 ],
+    [12,14,15,15,15,15,15,15,15,15,15,15,16,13],
+];
+
+const gridRows = map.length;
+const gridCols = map[0].length;
+let hills = gridCols - 2;
+
+// I think at this point it has to be hardcoded
+// the random terrain generation because I don't
+// know how to make random hills regardless of size.
+// It's very unfortunate but it will have to do.
+let hillNums = []
+let sections = {
+    0: [0,5],
+    1: [-3,-2],
+    2: [-1,2],
+    3: [0,1],
+}
+for (let section = 0; section < Object.keys(sections).length; section++) {
+    let range = sections[section];
+    for (var column = 0; column < 3; column++) {
+        hillNums.push(generateRandomInteger(range[0], range[1]));
+    }
+}
+if (generateRandomInteger(1,2) == 1) {
+    hillNums = hillNums.reverse();
+}
+console.log(hillNums);
+
+let hillY = 14;
+map[hillY][1] = 23;
+
+for (let column = 1; column <= hillNums.length; column++) {
+    let hillLength = hillNums[column - 1];
+    console.log(`HillLength: ${hillLength}`);
+    console.log(`Column: ${column}`);
+    console.log(`Current: ${hillY}, ${column}`);
+
+    if (hillLength == 0) {
+        map[hillY][column] = 23;
+        console.log(hillY + " " + column);
+    } else if (hillLength > 0) {
+        for (let height = 0; height < hillLength; height++) {
+            if (hillY > 10) {
+                hillY -= 1;
+            }
+            map[hillY][column] = 23;
+            console.log(hillY + " " + column);
+        }
+    } else if (hillLength < 0) {
+        for (let height = 0; height > hillLength; height--) {
+            if (hillY < 14) {
+                hillY += 1;
+            }
+            map[hillY][column] = 23;
+            console.log(hillY + " " + column);
+        }
+    }
+}
+
 function gameUpdate() {
 
 }
 
 function gameDraw() {
-    // BG
-    //ctx.drawImage(bgTileSet, 0, 0, tileSize, tileSize, 0, 0, tileSize, tileSize)
-    //https://github.com/pothonprogramming/pothonprogramming.github.io/blob/master/content/rabbit-trap/03/game-03.js
-    for (let index = map.length - 1; index > -1; -- index) {
-        let value = map[index] - 1;
-        let source_x =           (value % bgTileSetCols) * tileSize;
-        let source_y = Math.floor(value / bgTileSetCols) * tileSize;
-        let destination_x =           (index % gridCols) * tileSize;
-        let destination_y = Math.floor(index / gridCols) * tileSize;
-  
-        ctx.drawImage(bgTileSet, source_x, source_y, tileSize, tileSize, destination_x, destination_y, tileSize, tileSize);
+    for (let row = 0; row < gridRows; row++) {
+        for (let col = 0; col < gridCols; col++) {
+            let value = map[row][col] - 1;
+            let source_x = (value % bgTileSetCols) * tileSize;
+            let source_y = Math.floor(value / bgTileSetCols) * tileSize;
+            let destination_x = col * tileSize;
+            let destination_y = row * tileSize;
+
+            ctx.drawImage(
+                bgTileSet,
+                source_x, source_y,
+                tileSize, tileSize,
+                destination_x, destination_y,
+                tileSize, tileSize
+            );
+        }
     }
 }
 
