@@ -113,6 +113,7 @@ if (generateRandomInteger(1,2) == 1) {
     hillNums = hillNums.reverse();
 }
 console.log(hillNums);
+// hillNums = [1, 1, 1, -1, -1, 2, -3, -3, -2, 1, 3, 0]
 
 let hillY = 14;
 map[hillY][1] = 23;
@@ -144,6 +145,65 @@ for (let column = 1; column <= hillNums.length; column++) {
         }
     }
 }
+
+for (let y = 0; y < map.length; y++) {
+    for (let x = 0; x < map[0].length; x++) {
+        if (map[y][x] === 23) {
+            for (let y2 = y + 1; y2 < map.length; y2++) {
+                let current = map[y2][x];
+
+                if ([14, 15, 16].includes(current)) {
+                    break;
+                } 
+
+                if (map[y2][x] === 0) {
+                    map[y2][x] = 23;
+                }
+            }
+        }
+    }
+}
+
+function isHill(x, y) {
+    if (y < 0 || y >= map.length || x < 0 || x >= map[0].length) {
+        return false;
+    }
+    // God I wish their was an easier way to do this
+    return [23, 14, 15, 16, 7, 6, 25, 26, 27, 28, 29, 30, 31, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 45, 46, 47].includes(map[y][x]);
+}
+
+function autoTileMap() {
+    for (let y = 0; y < map.length; y++) {
+        for (let x = 0; x < map[0].length; x++) {
+            if (map[y][x] !== 23) continue;
+
+            const top    = isHill(x, y - 1);
+            const bottom = isHill(x, y + 1);
+            const left   = isHill(x - 1, y);
+            const right  = isHill(x + 1, y);
+            
+            if (top && bottom && left && right) {
+                map[y][x] = 42; // empty
+            } else if (!top && bottom && !left && right) {
+                map[y][x] = 29; // top-right corner
+            } else if (!top && bottom && left && !right) {
+                map[y][x] = 31; // top-left corner
+            } else if (top && bottom && left && !right) {
+                map[y][x] = 39; // right wall
+            } else if (!top && bottom && !left && !right) {
+                map[y][x] = 38; // one block hill
+            } else if (!top && bottom && left && right) {
+                map[y][x] = 30; // surface
+            } else if (top && bottom && !left && right) {
+                map[y][x] = 37; // left wall
+            } else {
+                map[y][x] = 23;
+            }
+        }
+    }
+}
+
+autoTileMap();
 
 function gameUpdate() {
 

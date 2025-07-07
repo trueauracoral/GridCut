@@ -42,4 +42,4 @@ https://github.com/pothonprogramming/pothonprogramming.github.io/blob/master/con
 It's not dynamic enough if I want to be able to change size. I guess that's not feasable at my skill level. I will just need to fiddle with it till I find a size that works well enough.
 The drawing of the dirt blocks will need to use some other technique.
 ## 7/6/25 
-Figured out line generation and drew temporary boxes to the screen. Tommorow need to figure out automatic tiling. Not sure how to do that.
+Figured out line generation and drew temporary boxes to the screen. Implemented automatic tiling.
