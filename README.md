@@ -6,7 +6,7 @@
     - [X] Randomly generate line
         It is based on 4 intervals, just add and subtract from the line based on randomly generated numbers (1,2,3). It will be harder to program than just saying it.
     - [X] Draw it to screen.
-    - [ ] Figure out how to use tileset to work with the random line created
+    - [X] Figure out how to use tileset to work with the random line created
 - [ ] Make bamboo grow from the top parts of the line on grid
 - [ ] Detect when bamboo reaches the top.
 - [ ] Create system to spawn and give the players the tools
@@ -43,3 +43,6 @@ It's not dynamic enough if I want to be able to change size. I guess that's not 
 The drawing of the dirt blocks will need to use some other technique.
 ## 7/6/25 
 Figured out line generation and drew temporary boxes to the screen. Implemented automatic tiling.
+## 7/7/25
+Cleaned out my tilemap to not have the blocks with outline. ALso drew elixer bar to the screen (functionality not implemented). I think this game should not try to be perfection I cannot invest too much time into this if it's not actually going to be fun.
+The grid is my guide and will lead me in the development of this game. If gridcut is fun then gridcut 2 will need to make less heavy use of grid. The grid and this game is a tribute to other puzzle games I like, like wario's woods, yoshi's cookie, dr. mario, puyo puyo and puzzle challenge. Through hardware restrictions come ease of code.

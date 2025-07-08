@@ -86,11 +86,14 @@ const map = [
     [ 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7 ],
     [ 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7 ],
     [12,14,15,15,15,15,15,15,15,15,15,15,16,13],
+    [ 0, 0,17,20,20,20,20,20,20,20,20,21, 0, 0],
 ];
 
 const gridRows = map.length;
 const gridCols = map[0].length;
 let hills = gridCols - 2;
+
+// GENERATE HILL NUMBERS
 
 // I think at this point it has to be hardcoded
 // the random terrain generation because I don't
@@ -101,7 +104,7 @@ let sections = {
     0: [0,5],
     1: [-3,-2],
     2: [-1,2],
-    3: [0,1],
+    3: [1,1],
 }
 for (let section = 0; section < Object.keys(sections).length; section++) {
     let range = sections[section];
@@ -115,6 +118,7 @@ if (generateRandomInteger(1,2) == 1) {
 console.log(hillNums);
 // hillNums = [1, 1, 1, -1, -1, 2, -3, -3, -2, 1, 3, 0]
 
+// PUT THE HILL NUMBERS ON THE GRID.
 let hillY = 14;
 map[hillY][1] = 23;
 
@@ -145,7 +149,7 @@ for (let column = 1; column <= hillNums.length; column++) {
         }
     }
 }
-
+//// FILL IN BLANK SPACES
 for (let y = 0; y < map.length; y++) {
     for (let x = 0; x < map[0].length; x++) {
         if (map[y][x] === 23) {
@@ -163,12 +167,12 @@ for (let y = 0; y < map.length; y++) {
         }
     }
 }
-
+// Apply tilemap
 function isHill(x, y) {
     if (y < 0 || y >= map.length || x < 0 || x >= map[0].length) {
         return false;
     }
-    // God I wish their was an easier way to do this
+    // God I wish there was an easier way to do this
     return [23, 14, 15, 16, 7, 6, 25, 26, 27, 28, 29, 30, 31, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 45, 46, 47].includes(map[y][x]);
 }
 
@@ -183,19 +187,19 @@ function autoTileMap() {
             const right  = isHill(x + 1, y);
             
             if (top && bottom && left && right) {
-                map[y][x] = 42; // empty
+                map[y][x] = 25; // empty
             } else if (!top && bottom && !left && right) {
-                map[y][x] = 29; // top-right corner
+                map[y][x] = 26; // top-left corner
             } else if (!top && bottom && left && !right) {
-                map[y][x] = 31; // top-left corner
+                map[y][x] = 28; // top-right corner
             } else if (top && bottom && left && !right) {
-                map[y][x] = 39; // right wall
-            } else if (!top && bottom && !left && !right) {
-                map[y][x] = 38; // one block hill
-            } else if (!top && bottom && left && right) {
-                map[y][x] = 30; // surface
+                map[y][x] = 31; // left wall
             } else if (top && bottom && !left && right) {
-                map[y][x] = 37; // left wall
+                map[y][x] = 29; // right wall
+            } else if (!top && bottom && !left && !right) {
+                map[y][x] = 30; // one block hill
+            } else if (!top && bottom && left && right) {
+                map[y][x] = 27; // surface
             } else {
                 map[y][x] = 23;
             }
@@ -210,6 +214,8 @@ function gameUpdate() {
 }
 
 function gameDraw() {
+    // 7/7/25 I hope this will draw everything in this game except HUD
+    // In the grid I tust. GridCut 2 will be procedurally generated and not draw from a puny grid
     for (let row = 0; row < gridRows; row++) {
         for (let col = 0; col < gridCols; col++) {
             let value = map[row][col] - 1;
