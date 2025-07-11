@@ -85,12 +85,17 @@ const map = [
     [ 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7 ],
     [ 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7 ],
     [ 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7 ],
+    [ 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7 ],
+    [ 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7 ],
     [12,14,15,15,15,15,15,15,15,15,15,15,16,13],
     [ 0, 0,17,20,20,20,20,20,20,20,20,21, 0, 0],
 ];
 
 const gridRows = map.length;
 const gridCols = map[0].length;
+
+let GAMEOVER = false
+
 let hills = gridCols - 2;
 
 // GENERATE HILL NUMBERS
@@ -121,6 +126,10 @@ console.log(hillNums);
 // PUT THE HILL NUMBERS ON THE GRID.
 let hillY = 14;
 map[hillY][1] = 23;
+let bambooCoords = []
+function addToMap(hillY, column) {
+    map[hillY][column] = 23;
+}
 
 for (let column = 1; column <= hillNums.length; column++) {
     let hillLength = hillNums[column - 1];
@@ -129,23 +138,33 @@ for (let column = 1; column <= hillNums.length; column++) {
     console.log(`Current: ${hillY}, ${column}`);
 
     if (hillLength == 0) {
-        map[hillY][column] = 23;
+        addToMap(hillY,column);
         console.log(hillY + " " + column);
     } else if (hillLength > 0) {
         for (let height = 0; height < hillLength; height++) {
-            if (hillY > 10) {
+            if (hillY > 12) {
                 hillY -= 1;
             }
-            map[hillY][column] = 23;
+            addToMap(hillY,column);
             console.log(hillY + " " + column);
         }
     } else if (hillLength < 0) {
         for (let height = 0; height > hillLength; height--) {
-            if (hillY < 14) {
+            if (hillY < 16) {
                 hillY += 1;
             }
-            map[hillY][column] = 23;
+            addToMap(hillY,column);
             console.log(hillY + " " + column);
+        }
+    }
+}
+// PUT BAMBOO
+for (let x = 1; x < map[0].length - 1; x++) {
+    for (let y = 0; y < map.length - 2; y++) {
+        console.log(`Y: ${y}, X: ${x}\n${map[y][x]}`);
+        if (map[y][x] == 23) {
+            map[y-1][x] = 1;
+            break;
         }
     }
 }
@@ -175,7 +194,6 @@ function isHill(x, y) {
     // God I wish there was an easier way to do this
     return [23, 14, 15, 16, 7, 6, 25, 26, 27, 28, 29, 30, 31, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 45, 46, 47].includes(map[y][x]);
 }
-
 function autoTileMap() {
     for (let y = 0; y < map.length; y++) {
         for (let x = 0; x < map[0].length; x++) {
@@ -206,11 +224,39 @@ function autoTileMap() {
         }
     }
 }
-
 autoTileMap();
 
-function gameUpdate() {
+function grow (column) {
+    for (let y = 1; y < map.length; y++) {
+        if (map[y][column] == 1) {
+            map[y][column] = 9;
+            let aboveValue = map[y-1][column];
+            if ([2,3].includes(aboveValue)) {
+                GAMEOVER = true;
+            } else {
+                map[y-1][column] = 1;
+            }
+        }
+    }
+}
 
+let TICK = 0;
+
+let growth = [120,180];
+let bambooGrowth = [];
+for (let i = 0; i < map[0].length -1; i++) {
+    bambooGrowth.push(growth[generateRandomInteger(0,growth.length - 1)])
+}
+
+function gameUpdate() {
+    TICK++;
+    if (!GAMEOVER) {
+        for (let bamboo = 0; bamboo < map.length -1; bamboo++) {
+            if (TICK % bambooGrowth[bamboo] == 0) {
+                grow(bamboo + 1);
+            }
+        }
+    }
 }
 
 function gameDraw() {

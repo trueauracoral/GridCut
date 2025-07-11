@@ -2,15 +2,18 @@
 
 # TODO List
 - [X] Draw BG.
-- [ ] Create a random line generator fpr terain
+- [X] Create a random line generator fpr terain
     - [X] Randomly generate line
         It is based on 4 intervals, just add and subtract from the line based on randomly generated numbers (1,2,3). It will be harder to program than just saying it.
     - [X] Draw it to screen.
     - [X] Figure out how to use tileset to work with the random line created
-- [ ] Make bamboo grow from the top parts of the line on grid
-- [ ] Detect when bamboo reaches the top.
+- [X] Make bamboo grow from the top parts of the line on grid
+    - [X] Draw starting bamboo points to screen
+    - [X] Ability to make specific column of bamboo grow
+    - [X] Have specific speed 10%, 20% and 30% or x1,x2,x3
+    - [X] Detect when bamboo reaches the top.
 - [ ] Create system to spawn and give the players the tools
-    - [ ] Mana
+    - [ ] Functioning mana bar that gives the player mana over time
 - [ ] Create tools
     - [ ] Circle
     - [ ] Triangle
@@ -45,4 +48,16 @@ The drawing of the dirt blocks will need to use some other technique.
 Figured out line generation and drew temporary boxes to the screen. Implemented automatic tiling.
 ## 7/7/25
 Cleaned out my tilemap to not have the blocks with outline. ALso drew elixer bar to the screen (functionality not implemented). I think this game should not try to be perfection I cannot invest too much time into this if it's not actually going to be fun.
-The grid is my guide and will lead me in the development of this game. If gridcut is fun then gridcut 2 will need to make less heavy use of grid. The grid and this game is a tribute to other puzzle games I like, like wario's woods, yoshi's cookie, dr. mario, puyo puyo and puzzle challenge. Through hardware restrictions come ease of code.
+The grid is my guide and will lead me in the development of this game. If gridcut is fun then gridcut 2 will need to make less heavy use of grid. The grid and this game is a tribute to other puzzle games I like, like wario's woods, yoshi's cookie, dr. mario, puyo puyo, puzzle challenge, gunpey. Through hardware restrictions come ease of code.
+## 7/10/25
+Finished all bamboo stuff. I can set growth rate they don't all grow at the same rate. The issue is framerate and all that.
+
+
+# Inspiration
+- Wario's Woods
+- Yoshi's Cookie
+- Dr. mario
+- Tetris
+- Puyo Puyo
+- Puzzle Challenge
+- Gunpey
