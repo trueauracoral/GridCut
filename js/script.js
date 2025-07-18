@@ -25,7 +25,7 @@ const loadFont = () => {
 
 loadFont();
 
-function drawPixelText(text, x, y, outline, color="black") {
+function drawPixelText(text, x, y,color="black", outline=false, ) {
     ctx.imageSmoothingEnabled = false; 
     ctx.textBaseline = 'top';
     ctx.fillStyle = color; 
@@ -97,6 +97,7 @@ const gridCols = map[0].length;
 let GAMEOVER = false
 
 let hills = gridCols - 2;
+let MANA = 0
 
 // GENERATE HILL NUMBERS
 
@@ -251,10 +252,33 @@ for (let i = 0; i < map[0].length -1; i++) {
 function gameUpdate() {
     TICK++;
     if (!GAMEOVER) {
+        // bamboo
         for (let bamboo = 0; bamboo < map.length -1; bamboo++) {
             if (TICK % bambooGrowth[bamboo] == 0) {
                 grow(bamboo + 1);
             }
+        }
+    }
+    // mana
+    if (TICK % 50 == 0) {
+        if (MANA + 1 <= 9) {
+            MANA++;
+        }
+    }
+    let manaRow = map.length - 1;
+    let manaCol = 3;
+    for (var i = MANA; i < 9 - 1; i++) {
+        if (i == 8) {
+            map[manaRow][manaCol+i] = 21
+        } else {
+            map[manaRow][manaCol+i] = 20
+        }
+    }
+    for (var i = 0; i < MANA; i++) {
+        if (i == 8) {
+            map[manaRow][manaCol+i] = 22
+        } else {
+            map[manaRow][manaCol+i] = 18
         }
     }
 }
@@ -279,6 +303,8 @@ function gameDraw() {
             );
         }
     }
+
+    drawPixelText(MANA,18,142, "white")
 }
 
 function gameLoop() {

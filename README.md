@@ -12,6 +12,7 @@
     - [X] Ability to make specific column of bamboo grow
     - [X] Have specific speed 10%, 20% and 30% or x1,x2,x3
     - [X] Detect when bamboo reaches the top.
+- [X] MANA Bar
 - [ ] Create system to spawn and give the players the tools
     - [ ] Functioning mana bar that gives the player mana over time
 - [ ] Create tools
